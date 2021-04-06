@@ -1,0 +1,50 @@
+﻿<UserControl
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:prism="http://prismlibrary.com/"             
+             xmlns:ico="http://metro.mahapps.com/winfx/xaml/iconpacks"
+             xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="UAS_Utility.Views.Coordinates"             
+             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="540.5" d:DesignHeight="296.167">
+    <Grid Margin="2">
+        <StackPanel>
+            <GroupBox Header="Degrees to MGRS" Margin="2">
+                <StackPanel>
+                    <Label Content="Latitude:"/>
+                    <TextBox Text="{Binding Latitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Label Content="Longitude:"/>
+                    <TextBox Text="{Binding Longitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid Margin="2">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+
+                        <TextBlock Text="{Binding MgrsResult}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyMgrsCommand}">
+                            <ico:FontAwesome Kind="CopyRegular"></ico:FontAwesome>
+                        </Button>
+
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+            <GroupBox Header="MGRS to Degrees" Margin="2">
+                <StackPanel>
+                    <Label Content="MGRS:"/>
+                    <TextBox Text="{Binding Mgrs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <Grid Margin="2" >
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
+                        </Grid.ColumnDefinitions>
+                        <TextBlock Text="{Binding DegreesResult}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
+                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyDegreesCommand}">
+                            <ico:FontAwesome Kind="CopyRegular"></ico:FontAwesome>
+                        </Button>
+                    </Grid>
+                </StackPanel>
+            </GroupBox>
+        </StackPanel>
+
+    </Grid>
+</UserControl>
