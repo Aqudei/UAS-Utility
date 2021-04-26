@@ -6,6 +6,12 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Title="{Binding Title}" Height="600" Width="800">
     <Grid>
+        <Image VerticalAlignment="Stretch" 
+               HorizontalAlignment="Stretch" 
+               Source="P24x2.jpg" 
+               Opacity="0.15"
+               Stretch="UniformToFill"/>
         <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+
     </Grid>
 </mah:MetroWindow>

@@ -16,12 +16,12 @@
                     <TextBox Text="{Binding Longitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Grid Margin="2">
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
 
                         <TextBlock Text="{Binding MgrsResult}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
-                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyMgrsCommand}">
+                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyMgrsCommand}" Margin="8,0,0,0" HorizontalAlignment="Center" ToolTip="Copy MGRS value">
                             <ico:FontAwesome Kind="CopyRegular"></ico:FontAwesome>
                         </Button>
 
@@ -34,11 +34,11 @@
                     <TextBox Text="{Binding Mgrs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
                     <Grid Margin="2" >
                         <Grid.ColumnDefinitions>
-                            <ColumnDefinition/>
+                            <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding DegreesResult}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
-                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyDegreesCommand}">
+                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyDegreesCommand}" Margin="8,0,0,0" HorizontalAlignment="Center" ToolTip="Copy Degrees value">
                             <ico:FontAwesome Kind="CopyRegular"></ico:FontAwesome>
                         </Button>
                     </Grid>
