@@ -1,4 +1,5 @@
-﻿using System.ComponentModel;
+﻿using System;
+using System.ComponentModel;
 using System.Windows;
 using CoordinateSharp;
 using Prism.Commands;
@@ -13,9 +14,9 @@ namespace UAS_Utility.ViewModels
 
         private string _degreesResult = "0,0";
 
-        private double _latitude;
+        private string _latitude;
 
-        private double _longitude;
+        private string _longitude;
 
         private string _mgrs;
 
@@ -34,13 +35,13 @@ namespace UAS_Utility.ViewModels
             set => SetProperty(ref _mgrs, value);
         }
 
-        public double Latitude
+        public string Latitude
         {
             get => _latitude;
             set => SetProperty(ref _latitude, value);
         }
 
-        public double Longitude
+        public string Longitude
         {
             get => _longitude;
             set => SetProperty(ref _longitude, value);
@@ -90,9 +91,16 @@ namespace UAS_Utility.ViewModels
 
         private void ComputeMgrs()
         {
-            var coord = new Coordinate(Latitude, Longitude);
-            coord.FormatOptions.Round = 10;
-            MgrsResult = coord.MGRS.ToString();
+            try
+            {
+                var coord = new Coordinate(double.Parse(Latitude), double.Parse(Longitude));
+                coord.FormatOptions.Round = 10;
+                MgrsResult = coord.MGRS.ToString();
+            }
+            catch (Exception e)
+            {
+                MgrsResult = "";
+            }
         }
 
         private void CopyMgrs()
