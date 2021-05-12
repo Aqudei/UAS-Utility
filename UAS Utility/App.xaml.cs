@@ -1,4 +1,5 @@
-﻿using UAS_Utility.Views;
+﻿using System.IO;
+using UAS_Utility.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
@@ -18,6 +19,13 @@ namespace UAS_Utility
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
             
+        }
+
+        protected override void OnStartup(StartupEventArgs e)
+        {
+            base.OnStartup(e);
+
+            Directory.CreateDirectory("Captures");
         }
     }
 }

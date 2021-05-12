@@ -6,12 +6,17 @@
              prism:ViewModelLocator.AutoWireViewModel="True"
              Title="{Binding Title}" Height="600" Width="800">
     <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition/>
+        </Grid.RowDefinitions>
+        <TextBlock Text="Press 'CTRL+SHIFT+Q' to capture screen into 'Captures' folder."/>
         <Image VerticalAlignment="Stretch" 
                HorizontalAlignment="Stretch" 
                Source="P24x2.jpg" 
                Opacity="0.15"
-               Stretch="UniformToFill"/>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+               Stretch="UniformToFill" Grid.Row="1"/>
+        <ContentControl prism:RegionManager.RegionName="ContentRegion" Grid.Row="1" />
 
     </Grid>
 </mah:MetroWindow>
