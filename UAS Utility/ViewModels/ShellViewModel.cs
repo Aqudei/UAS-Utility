@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Diagnostics;
 using System.IO;
 using System.Windows.Forms;
 using System.Windows.Media.Imaging;
@@ -14,10 +15,13 @@ namespace UAS_Utility.ViewModels
 {
     public class ShellViewModel : BindableBase
     {
+
         private DelegateCommand _captureScreenCommand;
         private string _title = "UAS Utility";
         private readonly HotkeyListener _hkl = new HotkeyListener();
         private readonly Hotkey _hotkey1;
+        private DelegateCommand _openCapturesFolderCommand;
+
         public ShellViewModel(IRegionManager regionManager)
         {
             regionManager.RegisterViewWithRegion("ContentRegion", typeof(Coordinates));
@@ -36,6 +40,14 @@ namespace UAS_Utility.ViewModels
         }
 
         public DelegateCommand CaptureScreenCommand => _captureScreenCommand ??= new DelegateCommand(CaptureScreen);
+
+        public DelegateCommand OpenCapturesFolderCommand =>
+            _openCapturesFolderCommand ??= new DelegateCommand(OpenCapturesFolder);
+
+        private void OpenCapturesFolder()
+        {
+            Process.Start("explorer.exe", "Captures");
+        }
 
         public string Title
         {

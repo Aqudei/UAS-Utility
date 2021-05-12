@@ -10,7 +10,18 @@
             <RowDefinition Height="Auto"/>
             <RowDefinition/>
         </Grid.RowDefinitions>
-        <TextBlock Text="Press 'CTRL+SHIFT+Q' to capture screen into 'Captures' folder."/>
+        <Grid>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition Width="Auto"/>
+            </Grid.ColumnDefinitions>
+            <TextBlock VerticalAlignment="Center" 
+                       Text="Press 'CTRL+SHIFT+Q' to capture screen into 'Captures' folder."/>
+            <Button Grid.Column="1" 
+                    Command="{Binding OpenCapturesFolderCommand}"
+                    VerticalAlignment="Center"
+                    Content="Open Capture Folder"/>
+        </Grid>
         <Image VerticalAlignment="Stretch" 
                HorizontalAlignment="Stretch" 
                Source="P24x2.jpg" 

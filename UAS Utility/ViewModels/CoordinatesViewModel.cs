@@ -12,7 +12,7 @@ namespace UAS_Utility.ViewModels
         private DelegateCommand _copyDegreesCommand;
         private DelegateCommand _copyMgrsCommand;
 
-        private string _degreesResult = "0,0";
+        private string _degreesResult = "0;0";
 
         private string _latitude;
 
