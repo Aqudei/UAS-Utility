@@ -22,7 +22,13 @@ namespace UAS_Utility.ViewModels
 
 
         private string _mgrsResult;
+        private string _prefix;
 
+        public string Prefix
+        {
+            get => _prefix;
+            set => SetProperty(ref _prefix, value);
+        }
 
         public CoordinatesViewModel()
         {
@@ -59,9 +65,11 @@ namespace UAS_Utility.ViewModels
             set => SetProperty(ref _degreesResult, value);
         }
 
-        public DelegateCommand CopyDegreesCommand => _copyDegreesCommand ??= new DelegateCommand(CopyDegrees, () => CanCopyDegrees).ObservesProperty(() => DegreesResult);
+        public DelegateCommand CopyDegreesCommand => _copyDegreesCommand ??=
+            new DelegateCommand(CopyDegrees, () => CanCopyDegrees).ObservesProperty(() => DegreesResult);
 
-        public DelegateCommand CopyMgrsCommand => _copyMgrsCommand ??= new DelegateCommand(CopyMgrs, () => CanCopyMgrs).ObservesProperty(() => MgrsResult);
+        public DelegateCommand CopyMgrsCommand => _copyMgrsCommand ??=
+            new DelegateCommand(CopyMgrs, () => CanCopyMgrs).ObservesProperty(() => MgrsResult);
 
         public bool CanCopyMgrs => !string.IsNullOrWhiteSpace(MgrsResult);
 
@@ -76,7 +84,14 @@ namespace UAS_Utility.ViewModels
 
         private void ComputeDegrees()
         {
-            var success = Coordinate.TryParse(Mgrs, out var coord);
+            var mgrsText = Mgrs;
+
+            if (!string.IsNullOrWhiteSpace(Prefix))
+            {
+                mgrsText = Prefix + Mgrs;
+            }
+
+            var success = Coordinate.TryParse(mgrsText, out var coord);
             if (success)
             {
                 coord.FormatOptions.Format = CoordinateFormatType.Decimal;

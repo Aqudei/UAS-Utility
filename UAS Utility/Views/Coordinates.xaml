@@ -5,7 +5,7 @@
              xmlns:ico="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="UAS_Utility.Views.Coordinates"             
-             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="540.5" d:DesignHeight="296.167">
+             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="580.5" d:DesignHeight="386.567">
     <Grid Margin="2">
         <StackPanel>
             <GroupBox Header="Degrees to MGRS" Margin="2">
@@ -30,17 +30,18 @@
             </GroupBox>
             <GroupBox Header="MGRS to Degrees" Margin="2">
                 <StackPanel>
+                    <Label Content="Prefix:"/>
+                    <TextBox Text="{Binding Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
                     <Label Content="MGRS:"/>
                     <TextBox Text="{Binding Mgrs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+
                     <Grid Margin="2" >
                         <Grid.ColumnDefinitions>
                             <ColumnDefinition Width="Auto"/>
                             <ColumnDefinition Width="Auto"/>
                         </Grid.ColumnDefinitions>
                         <TextBlock Text="{Binding DegreesResult}" FontWeight="Bold" FontSize="14" VerticalAlignment="Center"/>
-                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyDegreesCommand}" Margin="8,0,0,0" HorizontalAlignment="Center" ToolTip="Copy Degrees value">
-                            <ico:FontAwesome Kind="CopyRegular"></ico:FontAwesome>
-                        </Button>
+                        <Button Grid.Column="1" VerticalAlignment="Center" Command="{Binding CopyDegreesCommand}" Margin="8,0,0,0" HorizontalAlignment="Center" ToolTip="Copy Degrees value" Content="{ico:FontAwesome CopyRegular}"/>
                     </Grid>
                 </StackPanel>
             </GroupBox>
