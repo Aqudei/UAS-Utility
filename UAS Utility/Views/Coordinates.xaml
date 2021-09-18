@@ -31,9 +31,9 @@
             <GroupBox Header="MGRS to Degrees" Margin="2">
                 <StackPanel>
                     <Label Content="Prefix:"/>
-                    <TextBox Text="{Binding Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" />
+                    <TextBox Text="{Binding Prefix, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="51PYP" />
                     <Label Content="MGRS:"/>
-                    <TextBox Text="{Binding Mgrs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                    <TextBox Text="{Binding Mgrs, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" mah:TextBoxHelper.Watermark="1234567890"/>
 
                     <Grid Margin="2" >
                         <Grid.ColumnDefinitions>

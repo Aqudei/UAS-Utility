@@ -33,7 +33,7 @@
     <SuiteName>UAS Utils</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>10</ApplicationRevision>
+    <ApplicationRevision>11</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -61,10 +61,10 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>C57B4DC130080C8B21F65C1D08DBC7580EC0C736</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>22C536B92792D05C2A950BF5FCC576B0BD281659</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>UAS Utility_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>UAS Utility_1_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -139,6 +139,7 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
+    <None Include="UAS Utility_1_TemporaryKey.pfx" />
     <None Include="UAS Utility_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>

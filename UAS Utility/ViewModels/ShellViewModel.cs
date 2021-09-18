@@ -29,6 +29,9 @@ namespace UAS_Utility.ViewModels
             _hotkey1 = new Hotkey(Keys.Control | Keys.Shift, Keys.Q);
             _hkl.Add(_hotkey1);
             _hkl.HotkeyPressed += _hkl_HotkeyPressed;
+
+            CaptureFolder = Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.Desktop), "Captures");
+            Directory.CreateDirectory(CaptureFolder);
         }
 
         private void _hkl_HotkeyPressed(object sender, HotkeyEventArgs e)
@@ -46,7 +49,7 @@ namespace UAS_Utility.ViewModels
 
         private void OpenCapturesFolder()
         {
-            Process.Start("explorer.exe", "Captures");
+            Process.Start("explorer.exe", CaptureFolder);
         }
 
         public string Title
@@ -54,11 +57,12 @@ namespace UAS_Utility.ViewModels
             get => _title;
             set => SetProperty(ref _title, value);
         }
+        public string CaptureFolder { get; }
 
         public void CaptureScreen()
         {
             var capture = Screenshot.CaptureAllScreens();
-            var filename = Path.Combine("Captures", $"{DateTime.Now:G}.bmp".Replace("/", "-").Replace(":", "-"));
+            var filename = Path.Combine(CaptureFolder, $"{DateTime.Now:G}.bmp".Replace("/", "-").Replace(":", "-"));
             using var fileStream = new FileStream(filename, FileMode.Create);
             var encoder = new PngBitmapEncoder();
             //encoder.Frames.Add(BitmapFrame.Create(image));
