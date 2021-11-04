@@ -24,7 +24,7 @@ namespace UAS_Utility.ViewModels
         private string _mgrsResult;
         private string _prefix;
         private double highestPeak;
-        private double heightBuffer;
+        private double heightBuffer = 300;
         private double homeAltitude;
         private double aglResult;
         private double losResult;
