@@ -23,6 +23,11 @@ namespace UAS_Utility.ViewModels
 
         private string _mgrsResult;
         private string _prefix;
+        private double highestPeak;
+        private double heightBuffer;
+        private double homeAltitude;
+        private double aglResult;
+        private double losResult;
 
         public string Prefix
         {
@@ -64,6 +69,40 @@ namespace UAS_Utility.ViewModels
             get => _degreesResult;
             set => SetProperty(ref _degreesResult, value);
         }
+
+        public double HighestPeak
+        {
+            get => highestPeak;
+            set
+            {
+                SetProperty(ref highestPeak, value);
+                CalculateLOS();
+                CalculateAGL();
+            }
+        }
+
+        public double HeightBuffer
+        {
+            get => heightBuffer; set
+            {
+                SetProperty(ref heightBuffer, value);
+                CalculateAGL();
+                CalculateLOS();
+            }
+        }
+
+        public double HomeAltitude
+        {
+            get => homeAltitude; set
+            {
+                SetProperty(ref homeAltitude, value);
+                CalculateAGL();
+                CalculateLOS();
+            }
+        }
+
+        public double AGLResult { get => aglResult; set => SetProperty(ref aglResult, value); }
+        public double LOSResult { get => losResult; set => SetProperty(ref losResult, value); }
 
         public DelegateCommand CopyDegreesCommand => _copyDegreesCommand ??=
             new DelegateCommand(CopyDegrees, () => CanCopyDegrees).ObservesProperty(() => DegreesResult);
@@ -126,6 +165,16 @@ namespace UAS_Utility.ViewModels
         private void CopyDegrees()
         {
             Clipboard.SetText(DegreesResult);
+        }
+
+        private void CalculateAGL()
+        {
+            AGLResult = HeightBuffer + HighestPeak - HomeAltitude;
+        }
+
+        private void CalculateLOS()
+        {
+            LOSResult = HeightBuffer + HighestPeak;
         }
     }
 }

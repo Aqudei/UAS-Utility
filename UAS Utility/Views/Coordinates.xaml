@@ -5,7 +5,8 @@
              xmlns:ico="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="UAS_Utility.Views.Coordinates"             
-             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="580.5" d:DesignHeight="386.567">
+             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="597.7">
+
     <Grid Margin="2">
         <StackPanel>
             <GroupBox Header="Degrees to MGRS" Margin="2">
@@ -45,7 +46,37 @@
                     </Grid>
                 </StackPanel>
             </GroupBox>
-        </StackPanel>
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
 
+                <GroupBox Header="LOS Calculator" Margin="2" Grid.Column="0">
+                    <StackPanel Orientation="Vertical">
+                        <Label>Highest Peak (m):</Label>
+                        <TextBox Text="{Binding HighestPeak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>Height Buffer (m):</Label>
+                        <TextBox Text="{Binding HeightBuffer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>LOS Result:</Label>
+                        <TextBox IsReadOnly="True"
+                                 Text="{Binding LOSResult}"/>
+                    </StackPanel>
+                </GroupBox>
+                <GroupBox Header="FLIGHT AGL Calculator" Margin="2" Grid.Column="1">
+                    <StackPanel Orientation="Vertical">
+                        <Label>Highest Peak (m):</Label>
+                        <TextBox Text="{Binding HighestPeak, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>Height Buffer (m):</Label>
+                        <TextBox Text="{Binding HeightBuffer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>Home Point Altitude (m):</Label>
+                        <TextBox Text="{Binding HomeAltitude, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"/>
+                        <Label>AGL Result (m):</Label>
+                        <TextBox Text="{Binding AGLResult}"
+                                 IsReadOnly="True"/>
+                    </StackPanel>
+                </GroupBox>
+            </Grid>
+        </StackPanel>
     </Grid>
 </UserControl>
