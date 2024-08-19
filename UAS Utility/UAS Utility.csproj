@@ -33,7 +33,7 @@
     <SuiteName>UAS Utils</SuiteName>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.htm</WebPage>
-    <ApplicationRevision>13</ApplicationRevision>
+    <ApplicationRevision>15</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -64,7 +64,7 @@
     <ManifestCertificateThumbprint>F8363482B99237231A59D9336D3FD30E04FD2494</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>UAS Utility_1_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>UAS Utility_TemporaryKey.pfx</ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
@@ -107,6 +107,7 @@
       <DependentUpon>App.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
+    <Compile Include="Models\Coordinate.cs" />
     <Compile Include="ViewModels\CoordinatesViewModel.cs" />
     <Compile Include="ViewModels\ShellViewModel.cs" />
     <Compile Include="Views\Coordinates.xaml.cs">
@@ -139,12 +140,14 @@
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>
     </None>
-    <None Include="UAS Utility_1_TemporaryKey.pfx" />
     <None Include="UAS Utility_TemporaryKey.pfx" />
   </ItemGroup>
   <ItemGroup>
     <PackageReference Include="CoordinateSharp">
       <Version>2.10.1.1</Version>
+    </PackageReference>
+    <PackageReference Include="GeoAPI">
+      <Version>1.7.5</Version>
     </PackageReference>
     <PackageReference Include="GI.Screenshot">
       <Version>1.1.0</Version>
@@ -159,8 +162,17 @@
       <Version>4.8.0</Version>
     </PackageReference>
     <PackageReference Include="Prism.Unity" Version="8.0.0.1909" />
+    <PackageReference Include="ProjNET4GeoAPI">
+      <Version>1.4.1</Version>
+    </PackageReference>
     <PackageReference Include="ScreenCapturer">
       <Version>1.0.4</Version>
+    </PackageReference>
+    <PackageReference Include="SharpKml.Core">
+      <Version>6.1.0</Version>
+    </PackageReference>
+    <PackageReference Include="WindowsAPICodePack">
+      <Version>8.0.4</Version>
     </PackageReference>
   </ItemGroup>
   <ItemGroup>

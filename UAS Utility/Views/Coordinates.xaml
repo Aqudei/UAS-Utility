@@ -5,9 +5,15 @@
              xmlns:ico="http://metro.mahapps.com/winfx/xaml/iconpacks"
              xmlns:mah="http://metro.mahapps.com/winfx/xaml/controls"
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="d" x:Class="UAS_Utility.Views.Coordinates"             
-             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="597.7">
+             prism:ViewModelLocator.AutoWireViewModel="True" d:DesignWidth="763.033" d:DesignHeight="738.667">
 
     <Grid Margin="2">
+
+        <Grid.RowDefinitions>
+            <RowDefinition/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
         <StackPanel>
             <GroupBox Header="Degrees to MGRS" Margin="2">
                 <StackPanel>
@@ -78,5 +84,42 @@
                 </GroupBox>
             </Grid>
         </StackPanel>
+
+        <GroupBox Header="KML Generator"
+                  Grid.Row="1">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+    
+                </Grid.RowDefinitions>
+
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="Auto"/>
+                    <ColumnDefinition />
+                    <ColumnDefinition Width="Auto"/>
+                </Grid.ColumnDefinitions>
+
+                <Label Grid.Row="0" Margin="2,2,2,2">MGRS Coordinates</Label>
+                <TextBox Grid.Row="0" 
+                         Text="{Binding Targets}"
+                         Grid.Column="1" Margin="2,2,2,2"/>
+                <Button Grid.Column="2" 
+                        Width="80"
+                        Command="{Binding BrowseTargetsCommand}"
+                        Content="Browse" 
+                        Margin="2"/>
+                <CheckBox Content="Is First Item HomePoint?"
+                          IsChecked="{Binding IsFirstItemHomePoint}"
+                          Grid.Column="1"
+                          Grid.Row="2"/>
+                <Button Grid.Column="2" 
+                        Margin="2,2,2,2"
+                        Command="{Binding GenerateKmlCommand}"
+                        HorizontalAlignment="Right"
+                        Content="Generate"
+                        Grid.Row="2" Width="80"/>
+            </Grid>
+        </GroupBox>
     </Grid>
 </UserControl>
