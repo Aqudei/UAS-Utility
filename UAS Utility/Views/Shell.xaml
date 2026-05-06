@@ -18,7 +18,7 @@
                 <ColumnDefinition Width="Auto"/>
             </Grid.ColumnDefinitions>
             <TextBlock VerticalAlignment="Center" 
-                       Text="Press 'CTRL+SHIFT+Q' to capture screen into 'Captures' folder."/>
+                       Text="Press Ctrl+Shift+Q to save a screenshot to the Captures folder."/>
             <Button Grid.Column="1" 
                     Command="{Binding OpenCapturesFolderCommand}"
                     VerticalAlignment="Center"

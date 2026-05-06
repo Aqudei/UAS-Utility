@@ -43,6 +43,9 @@ namespace UAS_Utility.ViewModels
         private double aglResult;
         private double losResult;
 
+
+        public double RTLAltitudeSet { get => highestPeak + 200; }
+
         public string Prefix
         {
             get => _prefix;
@@ -92,12 +95,14 @@ namespace UAS_Utility.ViewModels
                 SetProperty(ref highestPeak, value);
                 CalculateLOS();
                 CalculateAGL();
+
+                RaisePropertyChanged(nameof(RTLAltitudeSet));
             }
         }
 
         public bool IsFirstItemHomePoint { get => _isFirstItemHomePoint; set => SetProperty(ref _isFirstItemHomePoint, value); }
         public string HomePoint { get => _homePoint; set => SetProperty(ref _homePoint, value); }
-        public string Targets { get => _targets; set => SetProperty(ref _targets, value); }
+        public string KmlFile { get => _kmlFile; set => SetProperty(ref _kmlFile, value); }
 
         public double HeightBuffer
         {
@@ -152,7 +157,7 @@ namespace UAS_Utility.ViewModels
             var result = dlg.ShowDialog();
             if (result == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
             {
-                Targets = dlg.FileName;
+                KmlFile = dlg.FileName;
             }
         }
 
@@ -194,12 +199,13 @@ namespace UAS_Utility.ViewModels
 
         private void CopyMgrs()
         {
-            Clipboard.SetText(MgrsResult);
+            Application.Current.Dispatcher.Invoke(() => Clipboard.SetText(MgrsResult));
+
         }
 
         private void CopyDegrees()
         {
-            Clipboard.SetText(DegreesResult);
+            Application.Current.Dispatcher.Invoke(()=>Clipboard.SetText(DegreesResult));
         }
 
         private void CalculateAGL()
@@ -213,7 +219,7 @@ namespace UAS_Utility.ViewModels
         }
 
         private DelegateCommand _generateKmlCommand;
-        private string _targets;
+        private string _kmlFile;
         private string _homePoint;
         private bool _isFirstItemHomePoint;
 
@@ -222,28 +228,58 @@ namespace UAS_Utility.ViewModels
             get { return _generateKmlCommand ??= new DelegateCommand(OnGenerateKml); }
         }
 
+
+        void LOSProcessing(SharpKml.Dom.Feature feature, double highestPeak, double homeAltitude, double heightBuffer)
+        {
+            if (feature == null) return;
+
+            // Print current feature name
+            Debug.WriteLine($"{feature.GetType().Name} - {feature.Name}");
+
+            if (feature is SharpKml.Dom.Placemark placemark)
+            {
+                if (placemark.Geometry != null)
+                {
+                    if (placemark.Geometry is LineString line)
+                    {
+                        line.AltitudeMode = SharpKml.Dom.AltitudeMode.Absolute;
+                        var coords = line.Coordinates.ToList();
+
+                        coords[0].Altitude = homeAltitude;
+                        coords[1].Altitude = highestPeak + heightBuffer;
+
+                        line.Coordinates = new SharpKml.Dom.CoordinateCollection(coords);
+
+                    }
+                }
+            }
+
+            // If it's a container (Document or Folder), recurse into children
+            if (feature is SharpKml.Dom.Container container)
+            {
+                foreach (var child in container.Features)
+                {
+                    LOSProcessing(child, highestPeak, homeAltitude, HeightBuffer);
+                }
+            }
+        }
         private void OnGenerateKml()
         {
-            var dlg = new Microsoft.WindowsAPICodePack.Dialogs.CommonSaveFileDialog
+            var kmlPath = KmlFile;
+            SharpKml.Engine.KmlFile file;
+            using (var stream = System.IO.File.OpenRead(kmlPath))
             {
-                DefaultExtension = ".kml",
-            };
+                file = SharpKml.Engine.KmlFile.Load(stream);
+            }
 
-            var result = dlg.ShowDialog();
-            if (result == Microsoft.WindowsAPICodePack.Dialogs.CommonFileDialogResult.Ok)
+            if (file.Root is SharpKml.Dom.Kml kml && kml.Feature is SharpKml.Dom.Document doc)
             {
-                var mgrs = File.ReadAllText(Targets).Split($"\r\n\t;, ".ToCharArray()).Where(s => !string.IsNullOrWhiteSpace(s.Trim()));
+                LOSProcessing(doc, HighestPeak, HomeAltitude, HeightBuffer);
+            }
 
-                // CreateCirclesKml(mgrs.ToList(), 0.250, dlg.FileName);
-
-                if (IsFirstItemHomePoint)
-                {
-                    CreateCirclesKml(mgrs.Skip(1).ToList(), 0.250, dlg.FileName, mgrs.First());
-                }
-                else
-                {
-                    CreateCirclesKml(mgrs.ToList(), 0.250, dlg.FileName);
-                }
+            using (var stream = System.IO.File.Create(kmlPath))
+            {
+                file.Save(stream);
             }
         }
 
@@ -381,7 +417,6 @@ namespace UAS_Utility.ViewModels
             Console.WriteLine($"KML file '{kmlFilename}' created successfully.");
             Process.Start(kmlFilename);
         }
-
 
 
         private SharpKml.Dom.Polygon CreateCircle(Models.Coordinate center, double radiusKm, int numPoints = 36)

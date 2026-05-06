@@ -61,10 +61,11 @@
     <LangVersion>latest</LangVersion>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestCertificateThumbprint>F8363482B99237231A59D9336D3FD30E04FD2494</ManifestCertificateThumbprint>
+    <ManifestCertificateThumbprint>DD5C3563FF8DA5214B336184495C68F06B1D78FD</ManifestCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup>
-    <ManifestKeyFile>UAS Utility_TemporaryKey.pfx</ManifestKeyFile>
+    <ManifestKeyFile>
+    </ManifestKeyFile>
   </PropertyGroup>
   <PropertyGroup>
     <GenerateManifests>true</GenerateManifests>
