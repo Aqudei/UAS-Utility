@@ -26,7 +26,7 @@
                 <RowDefinition/>
                 <RowDefinition/>
             </Grid.RowDefinitions>
-            
+
             <GroupBox Header="Degrees to MGRS" Margin="2">
                 <StackPanel>
                     <Label Content="Latitude:"/>
@@ -102,10 +102,11 @@
             </Grid>
         </Grid>
 
-        <GroupBox Header="KML Modifier"
+        <GroupBox Header="Smart KML Modifier / Generator (in development)"
                   Grid.Row="2">
             <Grid>
                 <Grid.RowDefinitions>
+                    <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
                     <RowDefinition Height="Auto"/>
@@ -118,7 +119,7 @@
                 </Grid.ColumnDefinitions>
 
                 <Label Grid.Row="0" Margin="2,2,2,2" Content="KML File"/>
-                
+
                 <TextBox Grid.Row="0" 
                          Text="{Binding KmlFile}"
                          Grid.Column="1" Margin="2,2,2,2"/>
@@ -136,14 +137,30 @@
                          Text="{Binding HomePoint}"
                          Margin="2,2,2,2"/>
 
-                <WrapPanel Grid.Row="2" Grid.ColumnSpan="3" Margin="5">
-                    <Button Margin="2,2,2,2"
-                            Command="{Binding GenerateKmlCommand}"
-                            HorizontalAlignment="Right"
-                            Content="UPDATE LOS"
-                            Grid.Row="2" Width="80"/>
-                </WrapPanel>
-                
+                <Label Grid.Row="2" >Target/s</Label>
+                <TextBox Grid.Row="2" 
+                         MinLines="3"
+                         Grid.Column="1"
+                         Text="{Binding Targets}"
+                         Margin="2,2,2,2"/>
+
+                <Border Grid.Row="3" Grid.ColumnSpan="3" 
+                        Padding="5"
+                        Margin="5">
+                    <WrapPanel>
+                        <Button Margin="2,2,2,2"
+                                Command="{Binding GenerateKmlCommand}"
+                                HorizontalAlignment="Right"
+                                Content="UPDATE LOS"
+                                Grid.Row="2" Width="80"/>
+
+                        <Button Margin="2"
+                                Content="GENERATE KML"
+                                Grid.Row="2"/>
+                    </WrapPanel>
+
+                </Border>
+
             </Grid>
         </GroupBox>
     </Grid>
