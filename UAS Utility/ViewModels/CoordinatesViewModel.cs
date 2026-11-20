@@ -23,8 +23,13 @@ namespace UAS_Utility.ViewModels
 {
     public class CoordinatesViewModel : BindableBase
     {
+        private readonly FormulaEvaluator _formulaEvaluator = new();
+
+        public string Title => "Calculator";
+
         private DelegateCommand _copyDegreesCommand;
         private DelegateCommand _copyMgrsCommand;
+
 
         private string _degreesResult = "0;0";
 
@@ -55,6 +60,14 @@ namespace UAS_Utility.ViewModels
         public CoordinatesViewModel()
         {
             PropertyChanged += CoordinatesViewModel_PropertyChanged;
+
+            LoadFormulas();
+        }
+
+        public void LoadFormulas()
+        {
+            _losFormula = Properties.Settings.Default.LOSFormula;
+            _aglFormula = Properties.Settings.Default.AGLFormula;
         }
 
         public string Mgrs
@@ -205,28 +218,41 @@ namespace UAS_Utility.ViewModels
 
         private void CopyDegrees()
         {
-            Application.Current.Dispatcher.Invoke(()=>Clipboard.SetText(DegreesResult));
+            Application.Current.Dispatcher.Invoke(() => Clipboard.SetText(DegreesResult));
         }
 
         private void CalculateAGL()
         {
-            AGLResult = HeightBuffer + HighestPeak - HomeAltitude;
+            // AGLResult = HeightBuffer + HighestPeak - HomeAltitude;
+
+            AGLResult = _formulaEvaluator.Evaluate(_aglFormula, GetFormulaVariables());
         }
 
         private void CalculateLOS()
         {
-            LOSResult = HeightBuffer + HighestPeak;
+            // LOSResult = HeightBuffer + HighestPeak;
+            LOSResult = _formulaEvaluator.Evaluate(_losFormula, GetFormulaVariables());
         }
-
+        private Dictionary<string, double> GetFormulaVariables()
+        {
+            return new Dictionary<string, double>
+            {
+                ["HeightBuffer"] = HeightBuffer,
+                ["HighestPeak"] = HighestPeak,
+                ["HomeAltitude"] = HomeAltitude
+            };
+        }
         private DelegateCommand _generateKmlCommand;
         private string _kmlFile;
         private string _homePoint;
         private bool _isFirstItemHomePoint;
-
+        public string _losFormula;
+        public string _aglFormula;
         public DelegateCommand GenerateKmlCommand
         {
             get { return _generateKmlCommand ??= new DelegateCommand(OnGenerateKml); }
         }
+
 
 
         void LOSProcessing(SharpKml.Dom.Feature feature, double highestPeak, double homeAltitude, double heightBuffer)

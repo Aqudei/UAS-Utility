@@ -4,6 +4,7 @@ using UAS_Utility.Views;
 using Prism.Ioc;
 using Prism.Modularity;
 using System.Windows;
+using MahApps.Metro.Controls.Dialogs;
 
 namespace UAS_Utility
 {
@@ -19,7 +20,11 @@ namespace UAS_Utility
 
         protected override void RegisterTypes(IContainerRegistry containerRegistry)
         {
+            containerRegistry.RegisterForNavigation<Formula>();
+            containerRegistry.RegisterForNavigation<Coordinates>();
+            containerRegistry.RegisterForNavigation<KMLProcessing>();
 
+            containerRegistry.RegisterInstance(DialogCoordinator.Instance);
         }
 
         protected override void OnStartup(StartupEventArgs e)
