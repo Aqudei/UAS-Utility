@@ -18,10 +18,11 @@ using GeoAPI.CoordinateSystems;
 using System.Security.Policy;
 using Point = SharpKml.Dom.Point;
 using System.Diagnostics;
+using Prism.Regions;
 
 namespace UAS_Utility.ViewModels
 {
-    public class CoordinatesViewModel : BindableBase
+    public class CoordinatesViewModel : BindableBase, INavigationAware
     {
         private readonly FormulaEvaluator _formulaEvaluator = new();
 
@@ -48,8 +49,7 @@ namespace UAS_Utility.ViewModels
         private double aglResult;
         private double losResult;
 
-
-        public double RTLAltitudeSet { get => highestPeak + 200; }
+        public double RTLAltitudeSet { get => rtlAltitudeResult; set => SetProperty(ref rtlAltitudeResult, value); }
 
         public string Prefix
         {
@@ -68,6 +68,7 @@ namespace UAS_Utility.ViewModels
         {
             _losFormula = Properties.Settings.Default.LOSFormula;
             _aglFormula = Properties.Settings.Default.AGLFormula;
+            _rtlAltitude = Properties.Settings.Default.RTLAltitudeFormula;
         }
 
         public string Mgrs
@@ -108,8 +109,8 @@ namespace UAS_Utility.ViewModels
                 SetProperty(ref highestPeak, value);
                 CalculateLOS();
                 CalculateAGL();
-
-                RaisePropertyChanged(nameof(RTLAltitudeSet));
+                CalculateRTLAltitude();
+                // RaisePropertyChanged(nameof(RTLAltitudeSet));
             }
         }
 
@@ -124,6 +125,7 @@ namespace UAS_Utility.ViewModels
                 SetProperty(ref heightBuffer, value);
                 CalculateAGL();
                 CalculateLOS();
+                CalculateRTLAltitude();
             }
         }
 
@@ -134,6 +136,7 @@ namespace UAS_Utility.ViewModels
                 SetProperty(ref homeAltitude, value);
                 CalculateAGL();
                 CalculateLOS();
+                CalculateRTLAltitude();
             }
         }
 
@@ -215,7 +218,10 @@ namespace UAS_Utility.ViewModels
             Application.Current.Dispatcher.Invoke(() => Clipboard.SetText(MgrsResult));
 
         }
-
+        private void CalculateRTLAltitude()
+        {
+            RTLAltitudeSet = _formulaEvaluator.Evaluate(_rtlAltitude, GetFormulaVariables());
+        }
         private void CopyDegrees()
         {
             Application.Current.Dispatcher.Invoke(() => Clipboard.SetText(DegreesResult));
@@ -248,11 +254,13 @@ namespace UAS_Utility.ViewModels
         private bool _isFirstItemHomePoint;
         public string _losFormula;
         public string _aglFormula;
+        private string _rtlAltitude;
+        private double rtlAltitudeResult;
+
         public DelegateCommand GenerateKmlCommand
         {
             get { return _generateKmlCommand ??= new DelegateCommand(OnGenerateKml); }
         }
-
 
 
         void LOSProcessing(SharpKml.Dom.Feature feature, double highestPeak, double homeAltitude, double heightBuffer)
@@ -444,7 +452,6 @@ namespace UAS_Utility.ViewModels
             Process.Start(kmlFilename);
         }
 
-
         private SharpKml.Dom.Polygon CreateCircle(Models.Coordinate center, double radiusKm, int numPoints = 36)
         {
             var coords = new List<SharpKml.Base.Vector>();
@@ -473,5 +480,18 @@ namespace UAS_Utility.ViewModels
 
             return polygon;
         }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            LoadFormulas();
+        }
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        { }
     }
 }

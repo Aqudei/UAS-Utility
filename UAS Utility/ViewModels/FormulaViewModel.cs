@@ -16,6 +16,14 @@ namespace UAS_Utility.ViewModels
         private string _losFormula;
         private string _aglFormula;
 
+        private string _rtlAltitudeFormula;
+
+        public string RTLAltitudeFormula
+        {
+            get { return _rtlAltitudeFormula; }
+            set { SetProperty(ref _rtlAltitudeFormula , value); }
+        }
+
         public string LOSFormula
         {
             get => _losFormula;
@@ -42,19 +50,22 @@ namespace UAS_Utility.ViewModels
                 CanSave
             )
             .ObservesProperty(() => LOSFormula)
-            .ObservesProperty(() => AGLFormula);
+            .ObservesProperty(() => AGLFormula)
+            .ObservesProperty(() => RTLAltitudeFormula);
         }
 
         private void LoadSettings()
         {
             LOSFormula = Properties.Settings.Default.LOSFormula;
             AGLFormula = Properties.Settings.Default.AGLFormula;
+            RTLAltitudeFormula = Properties.Settings.Default.RTLAltitudeFormula;
         }
 
         private bool CanSave()
         {
             return !string.IsNullOrWhiteSpace(LOSFormula)
-                && !string.IsNullOrWhiteSpace(AGLFormula);
+                && !string.IsNullOrWhiteSpace(AGLFormula)
+                && !string.IsNullOrWhiteSpace(RTLAltitudeFormula);
         }
 
         private async Task SaveAsync()
@@ -63,6 +74,7 @@ namespace UAS_Utility.ViewModels
             {
                 Properties.Settings.Default.LOSFormula = LOSFormula.Trim();
                 Properties.Settings.Default.AGLFormula = AGLFormula.Trim();
+                Properties.Settings.Default.RTLAltitudeFormula = RTLAltitudeFormula.Trim();
 
                 Properties.Settings.Default.Save();
 

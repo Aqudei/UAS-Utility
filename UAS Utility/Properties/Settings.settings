@@ -8,5 +8,8 @@
     <Setting Name="AGLFormula" Type="System.String" Scope="User">
       <Value Profile="(Default)">{HeightBuffer} + {HighestPeak} - {HomeAltitude}</Value>
     </Setting>
+    <Setting Name="RTLAltitudeFormula" Type="System.String" Scope="User">
+      <Value Profile="(Default)">{HighestPeak} - {HomeAltitude} + 150</Value>
+    </Setting>
   </Settings>
 </SettingsFile>

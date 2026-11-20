@@ -46,5 +46,17 @@ namespace UAS_Utility.Properties {
                 this["AGLFormula"] = value;
             }
         }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("{HighestPeak} - {HomeAltitude} + 150")]
+        public string RTLAltitudeFormula {
+            get {
+                return ((string)(this["RTLAltitudeFormula"]));
+            }
+            set {
+                this["RTLAltitudeFormula"] = value;
+            }
+        }
     }
 }
